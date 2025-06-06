@@ -1,0 +1,25 @@
+name: Monitoramento de Logs no Windows
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  rodar_script:
+    runs-on: windows-latest
+
+    steps:
+      - name: Clonar o repositório
+        uses: actions/checkout@v3
+
+      - name: Instalar dependências
+        run: pip install pywin32
+
+      - name: Executar script Python
+        run: python CapturaDeLog.py
+
+      - name: Upload do arquivo CSV (artefato)
+        uses: actions/upload-artifact@v3
+        with:
+          name: logs-capturados
+          path: logs_login_falhos.csv
+
